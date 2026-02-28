@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerAnimatorController : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip punchSound;
     private Animator animator;
     private PlayerMovement movement;
      private Rigidbody rb;
@@ -14,19 +16,27 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         movement = GetComponent<PlayerMovement>();
-         rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
 
     public void Update()
     {
         animator.SetFloat("CharacterSpeed", rb.velocity.magnitude);
-        animator.SetBool("IsGrounded", movement.IsGrounded);
-       
+        animator.SetBool("IsGrounded",movement.IsGrounded);
         if (Input.GetButtonUp("Fire1"))
         {
             animator.SetTrigger("doRoll");
         }
+        if (Input.GetButtonUp("Fire2"))
+        {
+            animator.SetTrigger("doPunch");
+        }
+    }
+
+    public void PlayPunchSound()
+    {
+        audioSource.PlayOneShot(punchSound);
     }
 }
 
